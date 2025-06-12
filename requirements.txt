@@ -1,2 +1,3 @@
 Flask==2.3.2
 IMDbPY==2022.7.9
+requests==2.31.0
