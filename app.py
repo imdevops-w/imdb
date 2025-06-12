@@ -6,7 +6,7 @@ from imdb import IMDb
 app = Flask(__name__)
 
 # Setup sources
-ia = IMDb('mobile')  # faster scraping
+ia = IMDb()  # faster scraping
 OMDB_API_KEY = os.getenv("e63afbdc")
 TMDB_API_KEY = os.getenv("b5b80f499caa4c0c95b4205ae470fb14")
 
