@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify
+import os
+import json
 from scraper import get_movie_data
 
 app = Flask(__name__)
