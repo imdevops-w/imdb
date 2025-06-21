@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import html
+import os
+
 
 def get_movie_data(imdb_id):
     import requests
@@ -44,7 +47,7 @@ def get_movie_data(imdb_id):
 
     movie_data = {
         "imdbID": imdb_id,
-        "title": data.get("name", "N/A"),
+        "title": html.unescape(data.get("name", "N/A")),
         "year": data.get("datePublished", "N/A")[:4],
         "imdbRating": data.get("aggregateRating", {}).get("ratingValue", "N/A"),
         "runtime": data.get("duration", "N/A").replace("PT", "").lower(),
@@ -57,4 +60,11 @@ def get_movie_data(imdb_id):
         "poster": data.get("image", "")
     }
 
+    save_dir = "saved_data"
+    os.makedirs(save_dir, exist_ok=True)  
+    
+    save_path = os.path.join(save_dir, f"{imdb_id}.json")
+    with open(save_path, "w", encoding="utf-8") as f:
+        json.dump(movie_data, f, ensure_ascii=False, indent=4)
+        
     return movie_data
