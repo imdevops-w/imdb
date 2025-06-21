@@ -8,8 +8,15 @@ def index():
     imdb_id = request.args.get("imdbID")
     if not imdb_id:
         return jsonify({"error": "Missing imdbID"}), 400
+
+    filepath = f"data/{imdb_id}.json"
+
     try:
-        data = get_movie_data(imdb_id)
+        if os.path.exists(filepath):
+            with open(filepath, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        else:
+            data = get_movie_data(imdb_id)
         return jsonify(data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
